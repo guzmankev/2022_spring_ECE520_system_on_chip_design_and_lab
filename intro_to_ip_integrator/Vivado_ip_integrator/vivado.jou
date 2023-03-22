@@ -1,0 +1,65 @@
+#-----------------------------------------------------------
+# Vivado v2021.2 (64-bit)
+# SW Build 3367213 on Tue Oct 19 02:47:39 MDT 2021
+# IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+# Start of session at: Tue Mar 21 19:44:13 2023
+# Process ID: 4455
+# Current directory: /home/kevin/Documents/2022_spring_ECE520_system_on_chip_design_and_lab/intro_to_ip_integrator/Vivado_ip_integrator
+# Command line: vivado
+# Log file: /home/kevin/Documents/2022_spring_ECE520_system_on_chip_design_and_lab/intro_to_ip_integrator/Vivado_ip_integrator/vivado.log
+# Journal file: /home/kevin/Documents/2022_spring_ECE520_system_on_chip_design_and_lab/intro_to_ip_integrator/Vivado_ip_integrator/vivado.jou
+# Running On: kevin-Surface-Pro-6, OS: Linux, CPU Frequency: 2100.000 MHz, CPU Physical cores: 4, Host memory: 16691 MB
+#-----------------------------------------------------------
+start_gui
+open_project /home/kevin/Documents/2022_spring_ECE520_system_on_chip_design_and_lab/intro_to_ip_integrator/sp22-e520-lab-assignment2-guzmankev/IPI_Driver/lab/IPIdriver/IPIdriver.xpr
+update_compile_order -fileset sources_1
+open_bd_design {/home/kevin/Documents/2022_spring_ECE520_system_on_chip_design_and_lab/intro_to_ip_integrator/sp22-e520-lab-assignment2-guzmankev/IPI_Driver/lab/IPIdriver/IPIdriver.srcs/sources_1/bd/blkDesign/blkDesign.bd}
+regenerate_bd_layout
+disconnect_bd_net /register_adj_width_0_sig_out [get_bd_pins XOR_straight_x32/Op2]
+undo
+disconnect_bd_net /pattern_dout [get_bd_pins XOR_straight_x32/Op1]
+undo
+regenerate_bd_layout
+create_bd_port -dir I -from 31 -to 0 -type data pattern_to_match_x32
+startgroup
+make_bd_pins_external  [get_bd_cells any_matches]
+make_bd_intf_pins_external  [get_bd_cells any_matches]
+endgroup
+set_property name match_found_x1 [get_bd_ports Res_0]
+regenerate_bd_layout
+connect_bd_net [get_bd_ports pattern_to_match_x32] [get_bd_pins register_adj_width_0/sig_in]
+regenerate_bd_layout
+validate_bd_design
+startgroup
+make_bd_pins_external  [get_bd_pins register_adj_width_0/clk]
+endgroup
+set_property name clk_in [get_bd_ports clk_0]
+validate_bd_design
+create_bd_cell -type hier match_antimatch
+regenerate_bd_layout
+set_property location {1 114 74} [get_bd_cells pattern]
+set_property location {1 116 64} [get_bd_cells pattern]
+set_property screensize {104 138} [get_bd_cells match_antimatch]
+set_property location {1 85 317} [get_bd_cells match_antimatch]
+set_property location {1 128 309} [get_bd_cells match_antimatch]
+set_property screensize {234 82} [get_bd_cells match_antimatch]
+set_property screensize {249 275} [get_bd_cells match_antimatch]
+move_bd_cells [get_bd_cells match_antimatch] [get_bd_cells pattern] [get_bd_cells register_adj_width_0] [get_bd_cells XOR_straight_x32] [get_bd_cells NOT_x32] [get_bd_cells XOR_inverted_x32]
+move_bd_cells [get_bd_cells match_antimatch] [get_bd_cells NOT_inverted_x32] [get_bd_cells straight_all_same] [get_bd_cells inverted_all_same] [get_bd_cells NOT_straight_x32] [get_bd_cells any_matches]
+regenerate_bd_layout
+regenerate_bd_layout
+regenerate_bd_layout
+regenerate_bd_layout
+startgroup
+delete_bd_objs [get_bd_nets match_antimatch_match_found_x1] [get_bd_nets clk_in_1] [get_bd_nets pattern_to_match_x32_1]
+delete_bd_objs [get_bd_cells match_antimatch]
+delete_bd_objs [get_bd_ports clk_in] [get_bd_ports match_found_x1] [get_bd_ports pattern_to_match_x32]
+endgroup
+startgroup
+create_bd_cell -type ip -vlnv xilinx.com:ip:processing_system7:5.5 processing_system7_0
+endgroup
+undo
+undo
+undo
+regenerate_bd_layout
+save_bd_design

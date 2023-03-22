@@ -1,0 +1,15 @@
+#-----------------------------------------------------------
+# Vivado v2021.2 (64-bit)
+# SW Build 3367213 on Tue Oct 19 02:47:39 MDT 2021
+# IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+# Start of session at: Sun Mar 19 21:23:15 2023
+# Process ID: 23213
+# Current directory: /home/kevin/Documents/2022_spring_ECE520_system_on_chip_design_and_lab/intro_to_ip_integrator/Vivado_ip_integrator
+# Command line: vivado
+# Log file: /home/kevin/Documents/2022_spring_ECE520_system_on_chip_design_and_lab/intro_to_ip_integrator/Vivado_ip_integrator/vivado.log
+# Journal file: /home/kevin/Documents/2022_spring_ECE520_system_on_chip_design_and_lab/intro_to_ip_integrator/Vivado_ip_integrator/vivado.jou
+# Running On: kevin-Surface-Pro-6, OS: Linux, CPU Frequency: 2100.000 MHz, CPU Physical cores: 4, Host memory: 16690 MB
+#-----------------------------------------------------------
+start_gui
+open_project /home/kevin/Desktop/Zynq_Book/Lab9_part2/sp22-e520-lab-assignment9-sw-guzmankev/hardware/fir_lab/fir_lab.xpr
+update_compile_order -fileset sources_1

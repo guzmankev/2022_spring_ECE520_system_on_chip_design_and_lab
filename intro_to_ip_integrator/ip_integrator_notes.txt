@@ -1,0 +1,33 @@
+-Tcl commnads use in Vivado:
+
+*In the Vivado console when you create a block, this is the command:
+	[create_bd_design "blkDesign"] 
+ Here blkDesign is the name of my block design.
+
+*In order to generate blocks we use the following command:
+	[create_bd_cell -type ip -vlnv xilinx.com:ip:util_vector_logic:2.0 util_vector_logic_0]
+Using the reference guide, we determine that the syntx "Adds a IP cell from the IP catalog, or add a new hierarchical block.
+
+You can always reference the "Vivado Design Suite Tcl Command Reference Guide". 
+
+*Here the set_property is calling get_bd_cells. The get_bd_cells part would look for a block called util_vector_logic_0. 
+	--set_property name XOR_straight_x32 [get_bd_cells util_vector_logic_0]--
+
+We add the following IP cells in our IDE:
+create_bd_cell -type ip -vlnv xilinx.com:ip:util_vector_logic:2.0 NOT_x32
+create_bd_cell -type ip -vlnv xilinx.com:ip:util_vector_logic:2.0 NOT_straight_x32
+create_bd_cell -type ip -vlnv xilinx.com:ip:util_vector_logic:2.0 NOT_inverted_x32
+create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_0
+
+set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {not} CONFIG.LOGO_FILE {data/sym_notgate.png}] [get_bd_cells NOT_x32]
+set_property -dict [list CONFIG.CONST_WIDTH {32} CONFIG.CONST_VAL {1023}] [get_bd_cells pattern]
+
+create_bd_cell -type module -reference register_adj_width register_adj_width_0
+
+* Clean up the block design using this regenerate layout command:
+	--regenerate_bd_layout--
+
+* To connect an IP block output pins to another IP block input pins we use the following sytnax:
+	--connect_bd_net [get_bd_pins XOR_inverted_x32/Res] [get_bd_pins NOT_inverted_x32/Op1]--
+
+

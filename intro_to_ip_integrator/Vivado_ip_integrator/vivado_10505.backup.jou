@@ -1,0 +1,81 @@
+#-----------------------------------------------------------
+# Vivado v2021.2 (64-bit)
+# SW Build 3367213 on Tue Oct 19 02:47:39 MDT 2021
+# IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+# Start of session at: Mon Mar 20 18:40:29 2023
+# Process ID: 10505
+# Current directory: /home/kevin/Documents/2022_spring_ECE520_system_on_chip_design_and_lab/intro_to_ip_integrator/Vivado_ip_integrator
+# Command line: vivado
+# Log file: /home/kevin/Documents/2022_spring_ECE520_system_on_chip_design_and_lab/intro_to_ip_integrator/Vivado_ip_integrator/vivado.log
+# Journal file: /home/kevin/Documents/2022_spring_ECE520_system_on_chip_design_and_lab/intro_to_ip_integrator/Vivado_ip_integrator/vivado.jou
+# Running On: kevin-Surface-Pro-6, OS: Linux, CPU Frequency: 2100.000 MHz, CPU Physical cores: 4, Host memory: 16691 MB
+#-----------------------------------------------------------
+start_gui
+open_project /home/kevin/Documents/2022_spring_ECE520_system_on_chip_design_and_lab/intro_to_ip_integrator/sp22-e520-lab-assignment2-guzmankev/IPI_Driver/lab/IPIdriver/IPIdriver.xpr
+update_compile_order -fileset sources_1
+open_bd_design {/home/kevin/Documents/2022_spring_ECE520_system_on_chip_design_and_lab/intro_to_ip_integrator/sp22-e520-lab-assignment2-guzmankev/IPI_Driver/lab/IPIdriver/IPIdriver.srcs/sources_1/bd/blkDesign/blkDesign.bd}
+set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {not} CONFIG.LOGO_FILE {data/sym_notgate.png}] [get_bd_cells NOT_x32]
+set_property -dict [list CONFIG.CONST_WIDTH {32} CONFIG.CONST_VAL {1023}] [get_bd_cells pattern]
+proc ipCustomize {} {
+
+   # pattern
+   set_property -dict [list CONFIG.CONST_WIDTH {32} CONFIG.CONST_VAL {1023}] [get_bd_cells pattern];
+
+   # inverters
+   set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {not}] [get_bd_cells NOT_x32];
+   set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {not}] [get_bd_cells NOT_straight_x32];
+   set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {not}] [get_bd_cells NOT_inverted_x32];
+
+   # XORs
+   set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {xor}] [get_bd_cells XOR_straight_x32];
+   set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {xor}] [get_bd_cells XOR_inverted_x32];
+
+   # OR
+   set_property -dict [list CONFIG.C_SIZE {1} CONFIG.C_OPERATION {or}] [get_bd_cells any_matches];
+
+   # reduction logic - AND
+   set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {and}] [get_bd_cells straight_all_same];
+   set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {and}] [get_bd_cells inverted_all_same];
+
+   save_bd_design;
+
+}
+ipCustomize
+startgroup
+create_bd_cell -type ip -vlnv xilinx.com:ip:util_reduced_logic:2.0 util_reduced_logic_0
+endgroup
+set_property name straight_all_same [get_bd_cells util_reduced_logic_0]
+startgroup
+create_bd_cell -type ip -vlnv xilinx.com:ip:util_reduced_logic:2.0 util_reduced_logic_0
+endgroup
+set_property name inverted_all_same [get_bd_cells util_reduced_logic_0]
+proc ipCustomize {} {
+
+   # pattern
+   set_property -dict [list CONFIG.CONST_WIDTH {32} CONFIG.CONST_VAL {1023}] [get_bd_cells pattern];
+
+   # inverters
+   set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {not}] [get_bd_cells NOT_x32];
+   set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {not}] [get_bd_cells NOT_straight_x32];
+   set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {not}] [get_bd_cells NOT_inverted_x32];
+
+   # XORs
+   set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {xor}] [get_bd_cells XOR_straight_x32];
+   set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {xor}] [get_bd_cells XOR_inverted_x32];
+
+   # OR
+   set_property -dict [list CONFIG.C_SIZE {1} CONFIG.C_OPERATION {or}] [get_bd_cells any_matches];
+
+   # reduction logic - AND
+   set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {and}] [get_bd_cells straight_all_same];
+   set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {and}] [get_bd_cells inverted_all_same];
+
+   save_bd_design;
+
+}
+ipCustomize
+regenerate_bd_layout
+cd /home/kevin/Documents/2022_spring_ECE520_system_on_chip_design_and_lab/intro_to_ip_integrator/sp22-e520-lab-assignment2-guzmankev/IPI_Driver/support
+source IPI_Driver_completer_V2.tcl
+ipAddRename
+ipCustomize

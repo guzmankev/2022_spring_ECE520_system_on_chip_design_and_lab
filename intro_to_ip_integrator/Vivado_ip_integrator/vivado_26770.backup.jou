@@ -1,0 +1,17 @@
+#-----------------------------------------------------------
+# Vivado v2021.2 (64-bit)
+# SW Build 3367213 on Tue Oct 19 02:47:39 MDT 2021
+# IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+# Start of session at: Sun Mar 19 21:27:08 2023
+# Process ID: 26770
+# Current directory: /home/kevin/Documents/2022_spring_ECE520_system_on_chip_design_and_lab/intro_to_ip_integrator/Vivado_ip_integrator
+# Command line: vivado
+# Log file: /home/kevin/Documents/2022_spring_ECE520_system_on_chip_design_and_lab/intro_to_ip_integrator/Vivado_ip_integrator/vivado.log
+# Journal file: /home/kevin/Documents/2022_spring_ECE520_system_on_chip_design_and_lab/intro_to_ip_integrator/Vivado_ip_integrator/vivado.jou
+# Running On: kevin-Surface-Pro-6, OS: Linux, CPU Frequency: 2100.000 MHz, CPU Physical cores: 4, Host memory: 16690 MB
+#-----------------------------------------------------------
+start_gui
+xhub::refresh_catalog [xhub::get_xstores xilinx_board_store]
+create_project IPIdriver /home/kevin/Documents/2022_spring_ECE520_system_on_chip_design_and_lab/intro_to_ip_integrator/sp22-e520-lab-assignment2-guzmankev/IPI_Driver/lab/IPIdriver -part xc7z010clg400-1
+set_property board_part digilentinc.com:zybo-z7-10:part0:1.0 [current_project]
+set_property target_language VHDL [current_project]

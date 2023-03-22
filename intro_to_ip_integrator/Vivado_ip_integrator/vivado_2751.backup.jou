@@ -1,0 +1,194 @@
+#-----------------------------------------------------------
+# Vivado v2021.2 (64-bit)
+# SW Build 3367213 on Tue Oct 19 02:47:39 MDT 2021
+# IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+# Start of session at: Tue Mar 21 10:54:43 2023
+# Process ID: 2751
+# Current directory: /home/kevin/Documents/2022_spring_ECE520_system_on_chip_design_and_lab/intro_to_ip_integrator/Vivado_ip_integrator
+# Command line: vivado
+# Log file: /home/kevin/Documents/2022_spring_ECE520_system_on_chip_design_and_lab/intro_to_ip_integrator/Vivado_ip_integrator/vivado.log
+# Journal file: /home/kevin/Documents/2022_spring_ECE520_system_on_chip_design_and_lab/intro_to_ip_integrator/Vivado_ip_integrator/vivado.jou
+# Running On: kevin-Surface-Pro-6, OS: Linux, CPU Frequency: 2100.000 MHz, CPU Physical cores: 4, Host memory: 16691 MB
+#-----------------------------------------------------------
+start_gui
+open_project /home/kevin/Documents/2022_spring_ECE520_system_on_chip_design_and_lab/intro_to_ip_integrator/sp22-e520-lab-assignment2-guzmankev/IPI_Driver/lab/IPIdriver/IPIdriver.xpr
+update_compile_order -fileset sources_1
+open_bd_design {/home/kevin/Documents/2022_spring_ECE520_system_on_chip_design_and_lab/intro_to_ip_integrator/sp22-e520-lab-assignment2-guzmankev/IPI_Driver/lab/IPIdriver/IPIdriver.srcs/sources_1/bd/blkDesign/blkDesign.bd}
+import_files -norecurse /home/kevin/Documents/2022_spring_ECE520_system_on_chip_design_and_lab/intro_to_ip_integrator/sp22-e520-lab-assignment2-guzmankev/IPI_Driver/support/register_adj_width.vhd
+update_compile_order -fileset sources_1
+create_bd_cell -type module -reference register_adj_width register_adj_width_0
+save_bd_design
+set_property -dict [list CONFIG.width {32}] [get_bd_cells register_adj_width_0]
+regenerate_bd_layout
+regenerate_bd_layout
+regenerate_bd_layout
+connect_bd_net [get_bd_pins pattern/dout] [get_bd_pins XOR_straight_x32/Op1]
+connect_bd_net [get_bd_pins pattern/dout] [get_bd_pins NOT_x32/Op1]
+connect_bd_net [get_bd_pins NOT_x32/Res] [get_bd_pins XOR_inverted_x32/Op1]
+set_property location {1 171 364} [get_bd_cells XOR_inverted_x32]
+connect_bd_net [get_bd_pins XOR_inverted_x32/Res] [get_bd_pins NOT_inverted_x32/Op1]
+internalConnects
+ipAddRename
+ipAddRename
+ipCustomize
+proc ipAddRename {} {
+   # constant pattern
+   create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 pattern;
+
+   # vector logic
+   create_bd_cell -type ip -vlnv xilinx.com:ip:util_vector_logic:2.0 NOT_x32;
+   create_bd_cell -type ip -vlnv xilinx.com:ip:util_vector_logic:2.0 XOR_straight_x32;
+   create_bd_cell -type ip -vlnv xilinx.com:ip:util_vector_logic:2.0 XOR_inverted_x32;
+   create_bd_cell -type ip -vlnv xilinx.com:ip:util_vector_logic:2.0 NOT_straight_x32;
+   create_bd_cell -type ip -vlnv xilinx.com:ip:util_vector_logic:2.0 NOT_inverted_x32;
+   create_bd_cell -type ip -vlnv xilinx.com:ip:util_vector_logic:2.0 any_matches ;
+
+   # reduction logic
+   create_bd_cell -type ip -vlnv xilinx.com:ip:util_reduced_logic:2.0 straight_all_same;
+   create_bd_cell -type ip -vlnv xilinx.com:ip:util_reduced_logic:2.0 inverted_all_same;
+
+   save_bd_design;
+}
+ipCostomize
+proc ipCustomize {} {
+
+   # pattern
+   set_property -dict [list CONFIG.CONST_WIDTH {32} CONFIG.CONST_VAL {1023}] [get_bd_cells pattern];
+
+   # inverters
+   set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {not}] [get_bd_cells NOT_x32];
+   set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {not}] [get_bd_cells NOT_straight_x32];
+   set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {not}] [get_bd_cells NOT_inverted_x32];
+
+   # XORs
+   set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {xor}] [get_bd_cells XOR_straight_x32];
+   set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {xor}] [get_bd_cells XOR_inverted_x32];
+
+   # OR
+   set_property -dict [list CONFIG.C_SIZE {1} CONFIG.C_OPERATION {or}] [get_bd_cells any_matches];
+
+   # reduction logic - AND
+   set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {and}] [get_bd_cells straight_all_same];
+   set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {and}] [get_bd_cells inverted_all_same];
+
+   save_bd_design;
+
+}
+ipCustomize
+proc internalConnects {} {
+
+   # remove any previous connections
+   set nets [get_bd_nets -quiet {*}];
+   delete_bd_objs $nets;
+
+   # make connections
+   connect_bd_net [get_bd_pins pattern/dout] [get_bd_pins XOR_straight_x32/Op1];
+   connect_bd_net [get_bd_pins pattern/dout] [get_bd_pins NOT_x32/Op1];
+   connect_bd_net [get_bd_pins NOT_x32/Res] [get_bd_pins XOR_inverted_x32/Op1];
+   connect_bd_net [get_bd_pins XOR_straight_x32/Res] [get_bd_pins NOT_straight_x32/Op1];
+   connect_bd_net [get_bd_pins XOR_inverted_x32/Res] [get_bd_pins NOT_inverted_x32/Op1];
+   connect_bd_net [get_bd_pins NOT_inverted_x32/Res] [get_bd_pins inverted_all_same/Op1];
+   connect_bd_net [get_bd_pins NOT_straight_x32/Res] [get_bd_pins straight_all_same/Op1];
+   connect_bd_net [get_bd_pins straight_all_same/Res] [get_bd_pins any_matches/Op1];
+   connect_bd_net [get_bd_pins inverted_all_same/Res] [get_bd_pins any_matches/Op2];
+   connect_bd_net [get_bd_pins register_adj_width_0/sig_out] [get_bd_pins XOR_straight_x32/Op2];
+   connect_bd_net [get_bd_pins register_adj_width_0/sig_out] [get_bd_pins XOR_inverted_x32/Op2]   ;
+
+   save_bd_design;
+
+}
+ipCustomize
+proc ipAddRename {} {
+   # constant pattern
+   create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 pattern;
+
+   # vector logic
+   create_bd_cell -type ip -vlnv xilinx.com:ip:util_vector_logic:2.0 NOT_x32;
+   create_bd_cell -type ip -vlnv xilinx.com:ip:util_vector_logic:2.0 XOR_straight_x32;
+   create_bd_cell -type ip -vlnv xilinx.com:ip:util_vector_logic:2.0 XOR_inverted_x32;
+   create_bd_cell -type ip -vlnv xilinx.com:ip:util_vector_logic:2.0 NOT_straight_x32;
+   create_bd_cell -type ip -vlnv xilinx.com:ip:util_vector_logic:2.0 NOT_inverted_x32;
+   create_bd_cell -type ip -vlnv xilinx.com:ip:util_vector_logic:2.0 any_matches ;
+
+   # reduction logic
+   create_bd_cell -type ip -vlnv xilinx.com:ip:util_reduced_logic:2.0 straight_all_same;
+   create_bd_cell -type ip -vlnv xilinx.com:ip:util_reduced_logic:2.0 inverted_all_same;
+
+   save_bd_design;
+}
+ipCustomize
+proc ipCustomize {} {
+
+   # pattern
+   set_property -dict [list CONFIG.CONST_WIDTH {32} CONFIG.CONST_VAL {1023}] [get_bd_cells pattern];
+
+   # inverters
+   set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {not}] [get_bd_cells NOT_x32];
+   set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {not}] [get_bd_cells NOT_straight_x32];
+   set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {not}] [get_bd_cells NOT_inverted_x32];
+
+   # XORs
+   set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {xor}] [get_bd_cells XOR_straight_x32];
+   set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {xor}] [get_bd_cells XOR_inverted_x32];
+
+   # OR
+   set_property -dict [list CONFIG.C_SIZE {1} CONFIG.C_OPERATION {or}] [get_bd_cells any_matches];
+
+   # reduction logic - AND
+   set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {and}] [get_bd_cells straight_all_same];
+   set_property -dict [list CONFIG.C_SIZE {32} CONFIG.C_OPERATION {and}] [get_bd_cells inverted_all_same];
+
+   save_bd_design;
+
+}
+ipCustomize
+roc internalConnects {} {
+
+   # remove any previous connections
+   set nets [get_bd_nets -quiet {*}];
+   delete_bd_objs $nets;
+
+   # make connections
+   connect_bd_net [get_bd_pins pattern/dout] [get_bd_pins XOR_straight_x32/Op1];
+   connect_bd_net [get_bd_pins pattern/dout] [get_bd_pins NOT_x32/Op1];
+   connect_bd_net [get_bd_pins NOT_x32/Res] [get_bd_pins XOR_inverted_x32/Op1];
+   connect_bd_net [get_bd_pins XOR_straight_x32/Res] [get_bd_pins NOT_straight_x32/Op1];
+   connect_bd_net [get_bd_pins XOR_inverted_x32/Res] [get_bd_pins NOT_inverted_x32/Op1];
+   connect_bd_net [get_bd_pins NOT_inverted_x32/Res] [get_bd_pins inverted_all_same/Op1];
+   connect_bd_net [get_bd_pins NOT_straight_x32/Res] [get_bd_pins straight_all_same/Op1];
+   connect_bd_net [get_bd_pins straight_all_same/Res] [get_bd_pins any_matches/Op1];
+   connect_bd_net [get_bd_pins inverted_all_same/Res] [get_bd_pins any_matches/Op2];
+   connect_bd_net [get_bd_pins register_adj_width_0/sig_out] [get_bd_pins XOR_straight_x32/Op2];
+   connect_bd_net [get_bd_pins register_adj_width_0/sig_out] [get_bd_pins XOR_inverted_x32/Op2]   ;
+
+   save_bd_design;
+
+}
+proc internalConnects {} {
+
+   # remove any previous connections
+   set nets [get_bd_nets -quiet {*}];
+   delete_bd_objs $nets;
+
+   # make connections
+   connect_bd_net [get_bd_pins pattern/dout] [get_bd_pins XOR_straight_x32/Op1];
+   connect_bd_net [get_bd_pins pattern/dout] [get_bd_pins NOT_x32/Op1];
+   connect_bd_net [get_bd_pins NOT_x32/Res] [get_bd_pins XOR_inverted_x32/Op1];
+   connect_bd_net [get_bd_pins XOR_straight_x32/Res] [get_bd_pins NOT_straight_x32/Op1];
+   connect_bd_net [get_bd_pins XOR_inverted_x32/Res] [get_bd_pins NOT_inverted_x32/Op1];
+   connect_bd_net [get_bd_pins NOT_inverted_x32/Res] [get_bd_pins inverted_all_same/Op1];
+   connect_bd_net [get_bd_pins NOT_straight_x32/Res] [get_bd_pins straight_all_same/Op1];
+   connect_bd_net [get_bd_pins straight_all_same/Res] [get_bd_pins any_matches/Op1];
+   connect_bd_net [get_bd_pins inverted_all_same/Res] [get_bd_pins any_matches/Op2];
+   connect_bd_net [get_bd_pins register_adj_width_0/sig_out] [get_bd_pins XOR_straight_x32/Op2];
+   connect_bd_net [get_bd_pins register_adj_width_0/sig_out] [get_bd_pins XOR_inverted_x32/Op2]   ;
+
+   save_bd_design;
+
+}
+ipCustomize
+regenerate_bd_layout
+regenerate_bd_layout
+internalConnects
+regenerate_bd_layout
+regenerate_bd_layout
